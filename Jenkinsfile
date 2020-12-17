@@ -14,6 +14,8 @@ pipeline {
             steps {
                 script {
 
+                    params.compileTool
+
                     switch(params.compileTool)
                     {
                         case 'Maven':
