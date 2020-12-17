@@ -20,7 +20,7 @@ pipeline {
                     }
                     
                     stage('Run') {
-                        bat 'nohup start gradle bootRun &'
+                        bat 'start /B gradle bootRun'
                         sleep 20
                     }
 
