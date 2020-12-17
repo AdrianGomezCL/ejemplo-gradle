@@ -30,7 +30,7 @@ pipeline {
 
                     stage('Nexus') {
                         nexusPublisher nexusInstanceId: 'NexusLocal',
-                            nexusRepositoryId: 'test-repo',
+                            nexusRepositoryId: 'test-nexus',
                             packages: [
                                 [
                                     $class: 'MavenPackage',
