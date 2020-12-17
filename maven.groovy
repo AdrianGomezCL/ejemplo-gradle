@@ -7,31 +7,30 @@
 def call(){
     
     stage('compile') {
-        steps {
-            bat './mvnw.cmd clean compile -e'
-        }
+        bat './mvnw.cmd clean compile -e'
     }
+
     stage('test'){
-        steps {
-            bat './mvnw.cmd clean test -e'
-        }
+        bat './mvnw.cmd clean test -e'
     }
+
     stage('jar'){
-        steps {
-            bat './mvnw.cmd clean package -e'
+        bat './mvnw.cmd clean package -e'
+    }
+
+    stage('Sonar') {
+        // Nombre extraido desde Jenkins > Global tool configuration > SonarQube Scanner
+        def scannerHome = tool 'sonar-scanner';
+
+        // Nombre extraido desde Jenkins > Configurar el sistema > SonarQube servers
+        withSonarQubeEnv('sonar-server') {
+            bat "${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
         }
     }
-    stage('sonar') {
-        steps {
-            withSonarQubeEnv(installationName: 'sonar') {
-                bat 'mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
-            }
-        }
-    }
-    stage('uploadNexus'){
-        steps {
-            nexusPublisher nexusInstanceId: 'NexusJose',
-            nexusRepositoryId: 'test-repo',
+
+    stage('Nexus') {
+        nexusPublisher nexusInstanceId: 'NexusLocal',
+            nexusRepositoryId: 'test-nexus',
             packages: [
                 [
                     $class: 'MavenPackage',
@@ -39,7 +38,7 @@ def call(){
                         [
                             classifier: '',
                             extension: 'jar',
-                            filePath: 'C:\\proyects\\diplomado\\maven\\ejemplo-maven\\build\\DevOpsUsach2020-0.0.1.jar'
+                            filePath: 'C:\\proyects\\diplomado\\gradle\\ejemplo-gradle\\build\\DevOpsUsach2020-0.0.1.jar'
                         ]
                     ],
                     mavenCoordinate: [
@@ -50,7 +49,6 @@ def call(){
                     ]
                 ]
             ]
-        }
     }
 
 }
