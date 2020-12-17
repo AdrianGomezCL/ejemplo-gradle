@@ -29,8 +29,7 @@ pipeline {
                     }
 
                     stage('Nexus') {
-                        nexusPublisher
-                            nexusInstanceId: 'NexusLocal',
+                        nexusPublisher nexusInstanceId: 'NexusLocal',
                             nexusRepositoryId: 'test-repo',
                             packages: [
                                 [
