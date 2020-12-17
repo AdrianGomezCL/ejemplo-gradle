@@ -25,7 +25,7 @@ pipeline {
                     }
 
                     stage('Rest') {
-                        bat "curl -X GET 'http://localhost:8082/rest/mscovid/test?msg=testing'"
+                        bat 'curl -X GET "http://localhost:8082/rest/mscovid/test?msg=testing"'
                     }
 
                     stage('Nexus') {
