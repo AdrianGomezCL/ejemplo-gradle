@@ -4,7 +4,7 @@ pipeline {
     parameters {
         choice(
             name:'compileTool',
-            choices: ['Gradle', 'Maven'],
+            choices: ['Maven', 'Gradle'],
             description: 'Seleccione herramienta de compilacion'
         )
     }
@@ -16,11 +16,11 @@ pipeline {
 
                     switch(params.compileTool)
                     {
-                        case 'Gradle':
-                            load 'gradle.groovy'
-                        break;
                         case 'Maven':
                             load 'maven.groovy'
+                        break;
+                        case 'Gradle':
+                            load 'gradle.groovy'
                         break;
                     }
                 }
