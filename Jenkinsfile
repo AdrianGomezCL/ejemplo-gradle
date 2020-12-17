@@ -16,10 +16,10 @@ pipeline {
 
                     switch(params.compileTool)
                     {
-                        case 'gradle':
+                        case 'Gradle':
                             load 'gradle.groovy'
                         break;
-                        case 'maven':
+                        case 'Maven':
                             load 'maven.groovy'
                         break;
                     }
