@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     stage('Build & Test') {
-                        sh "gradle clean build"
+                        bat "gradle clean build"
                     }
                     
                     stage('Sonar') {
@@ -15,7 +15,7 @@ pipeline {
 
                         // Nombre extraido desde Jenkins > Configurar el sistema > SonarQube servers
                         withSonarQubeEnv('sonar-server') {
-                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
+                            bat "${scannerHome}\\bin\\sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"
                         }
                     }
                     
