@@ -8,7 +8,7 @@ def call(){
     
     stage('Compile') {
         env.STAGE = env.STAGE_NAME
-        bat './mvnwa.cmd clean compile -e'
+        bat './mvnw.cmd clean compile -e'
     }
 
     stage('Test'){
