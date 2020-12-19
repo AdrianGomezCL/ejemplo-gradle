@@ -16,6 +16,8 @@ pipeline {
 
                     params.compileTool
 
+                    env.STAGE=''
+
                     switch(params.compileTool)
                     {
                         case 'Maven':
@@ -34,10 +36,10 @@ pipeline {
 
     post {
         success {
-            slackSend message: '[Adrian Gomez] [ejemplo-gradle] [${params.compileTool}] ejecución exitosa'
+            slackSend message: '[Adrian Gomez] [${env.JOB_NAME}] [${params.compileTool}] ejecución exitosa'
         }
         failure {
-            slackSend message: '[Adrian Gomez] [ejemplo-gradle] [${params.compileTool}] ejecucion fallida en stage ${env.STAGE}'
+            slackSend message: '[Adrian Gomez] [${env.JOB_NAME}] [${params.compileTool}] ejecucion fallida en stage ${env.STAGE}'
         }
     }
 }

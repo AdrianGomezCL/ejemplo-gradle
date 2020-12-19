@@ -7,22 +7,22 @@
 def call(){
     
     stage('Compile') {
-        env.STAGE = 'Compile'
+        env.STAGE = env.STAGE_NAME
         bat './mvnw.cmd clean compile -e'
     }
 
     stage('Test'){
-        env.STAGE = 'Test'
+        env.STAGE = env.STAGE_NAME
         bat './mvnw.cmd clean test -e'
     }
 
     stage('Jar'){
-        env.STAGE = 'Jar'
+        env.STAGE = env.STAGE_NAME
         bat './mvnw.cmd clean package -e'
     }
 
     stage('Sonar') {
-        env.STAGE = 'Sonar'
+        env.STAGE = env.STAGE_NAME
         // Nombre extraido desde Jenkins > Global tool configuration > SonarQube Scanner
         def scannerHome = tool 'sonar-scanner';
 
@@ -33,7 +33,7 @@ def call(){
     }
 
     stage('Nexus') {
-        env.STAGE = 'Nexus'
+        env.STAGE = env.STAGE_NAME
         nexusPublisher nexusInstanceId: 'NexusLocal',
             nexusRepositoryId: 'test-nexus',
             packages: [

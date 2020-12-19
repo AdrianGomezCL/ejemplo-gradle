@@ -7,12 +7,12 @@
 def call(){
 
     stage('Build & Test') {
-        env.STAGE = 'Build & Test'
+        env.STAGE = env.STAGE_NAME
         bat "gradle clean build"
     }
 
     stage('Sonar') {
-        env.STAGE = 'Sonar'
+        env.STAGE = env.STAGE_NAME
         // Nombre extraido desde Jenkins > Global tool configuration > SonarQube Scanner
         def scannerHome = tool 'sonar-scanner';
 
@@ -23,18 +23,18 @@ def call(){
     }
 
     stage('Run') {
-        env.STAGE = 'Run'
+        env.STAGE = env.STAGE_NAME
         bat 'start /B gradle bootRun'
         sleep 20
     }
 
     stage('Rest') {
-        env.STAGE = 'Rest'
+        env.STAGE = env.STAGE_NAME
         bat 'curl -X GET "http://localhost:8082/rest/mscovid/test?msg=testing"'
     }
 
     stage('Nexus') {
-        env.STAGE = 'Nexus'
+        env.STAGE = env.STAGE_NAME
         nexusPublisher nexusInstanceId: 'NexusLocal',
             nexusRepositoryId: 'test-nexus',
             packages: [
