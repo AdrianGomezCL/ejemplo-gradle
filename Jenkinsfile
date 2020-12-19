@@ -33,10 +33,10 @@ pipeline {
     }
 
     post {
-        success: {
+        success {
             slackSend message: '[Adrian Gomez] [ejemplo-gradle] [${params.compileTool}] ejecución exitosa'
         }
-        failure: {
+        failure {
             slackSend message: '[Adrian Gomez] [ejemplo-gradle] [${params.compileTool}] ejecucion fallida en stage ${STAGE}'
         }
     }
