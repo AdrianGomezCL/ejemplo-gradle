@@ -29,15 +29,15 @@ pipeline {
                     }
                 }
             }
+        }
+    }
 
-            post {
-                success: {
-                    slackSend message: '[Adrian Gomez] [ejemplo-gradle] [${params.compileTool}] ejecución exitosa'
-                }
-                failure: {
-                    slackSend message: '[Adrian Gomez] [ejemplo-gradle] [${params.compileTool}] ejecucion fallida en stage ${STAGE}'
-                }
-            }
+    post {
+        success: {
+            slackSend message: '[Adrian Gomez] [ejemplo-gradle] [${params.compileTool}] ejecución exitosa'
+        }
+        failure: {
+            slackSend message: '[Adrian Gomez] [ejemplo-gradle] [${params.compileTool}] ejecucion fallida en stage ${STAGE}'
         }
     }
 }
