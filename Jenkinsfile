@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    env.NOMBRE = 'Adrian Gomez'
+    env.JOB = 'ejemplo-gradle'
+
     parameters {
         choice(
             name:'compileTool',
@@ -27,6 +30,15 @@ pipeline {
                             ejecucion.call()
                         break;
                     }
+                }
+            }
+
+            post {
+                success: {
+                    slackSend message: '[${NOMBRE}] [${JOB}] [${params.compileTool}] ejecución exitosa'
+                }
+                failure: {
+                    slackSend message: '[${NOMBRE}] [${JOB}] [${params.compileTool}] ejecucion fallida en stage ${STAGE}'
                 }
             }
         }
